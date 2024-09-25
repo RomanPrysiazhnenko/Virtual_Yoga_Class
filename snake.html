@@ -159,7 +159,7 @@
             document.getElementById("score").innerText = `Score: ${score}`;
             food = generateFood();
             clearInterval(gameInterval);
-            gameInterval = setInterval(drawGame, 100);  // Зменшено інтервал до 100 мс для швидшої реакції
+            gameInterval = setInterval(drawGame, 200);  // Швидкість зменшена вдвічі
         }
 
         startGame();
