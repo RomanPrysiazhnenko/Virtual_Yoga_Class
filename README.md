@@ -1,1 +1,1 @@
-# snake-game-bot-demo6
+# snake-game-bot-demo2
