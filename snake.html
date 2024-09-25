@@ -8,59 +8,98 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        canvas {
-            background-color: #000;
-            display: block;
-            margin: 0 auto;
-            border: 1px solid #fff;
+        h1 {
+            margin: 5px 0;
+            font-size: 24px;
+            color: #00FF00;
         }
         #score {
+            font-size: 18px;
+            color: yellow;
+            margin-bottom: 5px;
+        }
+        #game-container {
+            width: 320px;
+            height: 640px;
+            background-color: black;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #gameCanvas {
+            background-color: #000;
+            border: 1px solid white;
+            width: 300px;
+            height: 400px;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: 60px 60px 60px 60px; /* Чотири кнопки в одному ряду */
+            gap: 10px;
+        }
+        .controls button {
+            width: 60px;
+            height: 60px;
             font-size: 24px;
-            color: white;
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
         }
     </style>
 </head>
 <body>
-    <h1>Snake Game</h1>
-    <div id="score">Score: 0</div>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div id="game-container">
+        <h1>Snake Game</h1>
+        <div id="score">Score: 0</div>
+        <canvas id="gameCanvas" width="300" height="400"></canvas> <!-- Встановлюємо внутрішні розміри canvas -->
+
+        <div class="controls">
+            <button id="left">←</button>
+            <button id="up">↑</button>
+            <button id="down">↓</button>
+            <button id="right">→</button>
+        </div>
+    </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        const box = 20; // розмір однієї клітинки змійки
-        let snake = [{x: 9 * box, y: 10 * box}]; // змійка
-        let score = 0; // рахунок
-        let food = generateFood(); // генерація їжі
+        const box = 20;  // Клітинка тепер має квадратну форму (20x20 пікселів)
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        
+        let snake = [{x: 7 * box, y: 10 * box}];
+        let score = 0;
+        let food = generateFood();
+        let direction = null;
+        let gameInterval;
+
+        document.getElementById("left").addEventListener("click", () => changeDirection("LEFT"));
+        document.getElementById("up").addEventListener("click", () => changeDirection("UP"));
+        document.getElementById("down").addEventListener("click", () => changeDirection("DOWN"));
+        document.getElementById("right").addEventListener("click", () => changeDirection("RIGHT"));
 
         function generateFood() {
             return {
-                // їжа не з'являється на самих краях (1 клітинка від краю)
-                x: Math.floor(Math.random() * 18 + 1) * box,
-                y: Math.floor(Math.random() * 18 + 1) * box
+                x: Math.floor(Math.random() * (canvasWidth / box)) * box,
+                y: Math.floor(Math.random() * (canvasHeight / box)) * box
             };
         }
 
-        let direction;
-        document.addEventListener("keydown", changeDirection);
-
-        function changeDirection(event) {
-            if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-            else if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-            else if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-            else if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+        function changeDirection(newDirection) {
+            if (newDirection === "LEFT" && direction !== "RIGHT") direction = "LEFT";
+            if (newDirection === "UP" && direction !== "DOWN") direction = "UP";
+            if (newDirection === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
+            if (newDirection === "DOWN" && direction !== "UP") direction = "DOWN";
         }
 
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Малюємо змійку
+            // Малюємо змійку з квадратними клітинками
             for (let i = 0; i < snake.length; i++) {
                 ctx.fillStyle = (i === 0) ? "green" : "lightgreen";
                 ctx.fillRect(snake[i].x, snake[i].y, box, box);
@@ -68,38 +107,45 @@
                 ctx.strokeRect(snake[i].x, snake[i].y, box, box);
             }
 
-            // Малюємо їжу
+            // Малюємо їжу, яка також квадратної форми
             ctx.fillStyle = "red";
             ctx.fillRect(food.x, food.y, box, box);
 
-            // Рух змійки
             let snakeX = snake[0].x;
             let snakeY = snake[0].y;
 
+            // Рух змійки
             if (direction === "LEFT") snakeX -= box;
             if (direction === "UP") snakeY -= box;
             if (direction === "RIGHT") snakeX += box;
             if (direction === "DOWN") snakeY += box;
 
-            // З'їдання їжі
+            // Якщо змійка виходить за екран, вона з'являється з протилежного боку
+            if (snakeX < 0) {
+                snakeX = canvasWidth - box;
+            } else if (snakeX >= canvasWidth) {
+                snakeX = 0;
+            }
+
+            if (snakeY < 0) {
+                snakeY = canvasHeight - box;
+            } else if (snakeY >= canvasHeight) {
+                snakeY = 0;
+            }
+
+            // Перевірка на з'їдання їжі
             if (snakeX === food.x && snakeY === food.y) {
                 score++;
                 document.getElementById("score").innerText = `Score: ${score}`;
-                food = generateFood(); // нова їжа після з'їдання
+                food = generateFood();
             } else {
-                snake.pop(); // Якщо не з'їли їжу — видаляємо хвіст
+                snake.pop();
             }
 
-            // Додаємо нову голову
             let newHead = {x: snakeX, y: snakeY};
 
-            // Кінець гри при зіткненні зі стіною або самою собою
-            if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
-                clearInterval(game);
-                alert("Game Over");
-            }
-
-            snake.unshift(newHead); // Додаємо нову голову
+            // Додаємо нову голову
+            snake.unshift(newHead);
         }
 
         function collision(head, body) {
@@ -111,7 +157,18 @@
             return false;
         }
 
-        let game = setInterval(drawGame, 100); // Малюємо гру кожні 100 мс
+        function startGame() {
+            snake = [{x: 7 * box, y: 10 * box}];
+            direction = "RIGHT";
+            score = 0;
+            document.getElementById("score").innerText = `Score: ${score}`;
+            food = generateFood();
+            clearInterval(gameInterval);  
+            gameInterval = setInterval(drawGame, 130);  // Швидкість змійки зменшена на 30%
+        }
+
+        // Початковий запуск гри
+        startGame();
     </script>
 </body>
 </html>
