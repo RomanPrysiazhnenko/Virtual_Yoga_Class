@@ -39,7 +39,7 @@
         }
         .controls {
             display: grid;
-            grid-template-columns: 60px 60px 60px 60px; /* Чотири кнопки в одному ряду */
+            grid-template-columns: 60px 60px 60px 60px;
             gap: 10px;
         }
         .controls button {
@@ -53,7 +53,7 @@
     <div id="game-container">
         <h1>Snake Game</h1>
         <div id="score">Score: 0</div>
-        <canvas id="gameCanvas" width="300" height="400"></canvas> <!-- Встановлюємо внутрішні розміри canvas -->
+        <canvas id="gameCanvas" width="300" height="400"></canvas>
 
         <div class="controls">
             <button id="left">←</button>
@@ -67,7 +67,7 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        const box = 20;  // Клітинка тепер має квадратну форму (20x20 пікселів)
+        const box = 20;
         const canvasWidth = canvas.width;
         const canvasHeight = canvas.height;
         
@@ -75,12 +75,19 @@
         let score = 0;
         let food = generateFood();
         let direction = null;
+        let nextDirection = null;
         let gameInterval;
 
-        document.getElementById("left").addEventListener("click", () => changeDirection("LEFT"));
-        document.getElementById("up").addEventListener("click", () => changeDirection("UP"));
-        document.getElementById("down").addEventListener("click", () => changeDirection("DOWN"));
-        document.getElementById("right").addEventListener("click", () => changeDirection("RIGHT"));
+        document.getElementById("left").addEventListener("click", () => setDirection("LEFT"));
+        document.getElementById("up").addEventListener("click", () => setDirection("UP"));
+        document.getElementById("down").addEventListener("click", () => setDirection("DOWN"));
+        document.getElementById("right").addEventListener("click", () => setDirection("RIGHT"));
+
+        function setDirection(newDirection) {
+            if (nextDirection === null) {
+                nextDirection = newDirection;
+            }
+        }
 
         function generateFood() {
             return {
@@ -89,17 +96,19 @@
             };
         }
 
-        function changeDirection(newDirection) {
-            if (newDirection === "LEFT" && direction !== "RIGHT") direction = "LEFT";
-            if (newDirection === "UP" && direction !== "DOWN") direction = "UP";
-            if (newDirection === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
-            if (newDirection === "DOWN" && direction !== "UP") direction = "DOWN";
+        function changeDirection() {
+            if (nextDirection === "LEFT" && direction !== "RIGHT") direction = "LEFT";
+            if (nextDirection === "UP" && direction !== "DOWN") direction = "UP";
+            if (nextDirection === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
+            if (nextDirection === "DOWN" && direction !== "UP") direction = "DOWN";
+            nextDirection = null;
         }
 
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Малюємо змійку з квадратними клітинками
+            changeDirection(); // Змінюємо напрям одразу при оновленні кадру
+
             for (let i = 0; i < snake.length; i++) {
                 ctx.fillStyle = (i === 0) ? "green" : "lightgreen";
                 ctx.fillRect(snake[i].x, snake[i].y, box, box);
@@ -107,20 +116,17 @@
                 ctx.strokeRect(snake[i].x, snake[i].y, box, box);
             }
 
-            // Малюємо їжу, яка також квадратної форми
             ctx.fillStyle = "red";
             ctx.fillRect(food.x, food.y, box, box);
 
             let snakeX = snake[0].x;
             let snakeY = snake[0].y;
 
-            // Рух змійки
             if (direction === "LEFT") snakeX -= box;
             if (direction === "UP") snakeY -= box;
             if (direction === "RIGHT") snakeX += box;
             if (direction === "DOWN") snakeY += box;
 
-            // Якщо змійка виходить за екран, вона з'являється з протилежного боку
             if (snakeX < 0) {
                 snakeX = canvasWidth - box;
             } else if (snakeX >= canvasWidth) {
@@ -133,7 +139,6 @@
                 snakeY = 0;
             }
 
-            // Перевірка на з'їдання їжі
             if (snakeX === food.x && snakeY === food.y) {
                 score++;
                 document.getElementById("score").innerText = `Score: ${score}`;
@@ -143,31 +148,20 @@
             }
 
             let newHead = {x: snakeX, y: snakeY};
-
-            // Додаємо нову голову
             snake.unshift(newHead);
-        }
-
-        function collision(head, body) {
-            for (let i = 1; i < body.length; i++) {
-                if (head.x === body[i].x && head.y === body[i].y) {
-                    return true;
-                }
-            }
-            return false;
         }
 
         function startGame() {
             snake = [{x: 7 * box, y: 10 * box}];
             direction = "RIGHT";
+            nextDirection = null;
             score = 0;
             document.getElementById("score").innerText = `Score: ${score}`;
             food = generateFood();
-            clearInterval(gameInterval);  
-            gameInterval = setInterval(drawGame, 130);  // Швидкість змійки зменшена на 30%
+            clearInterval(gameInterval);
+            gameInterval = setInterval(drawGame, 100);  // Зменшено інтервал до 100 мс для швидшої реакції
         }
 
-        // Початковий запуск гри
         startGame();
     </script>
 </body>
