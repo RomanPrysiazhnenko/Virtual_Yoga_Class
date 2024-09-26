@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Yoga Class</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Virtual Yoga Class</h1>
+        <p id="instruction">Select your class to begin:</p>
+        <div class="class-selection">
+            <button class="class-btn" data-class="beginner">Beginner Yoga</button>
+            <button class="class-btn" data-class="relaxation">Relaxation Yoga</button>
+            <button class="class-btn" data-class="advanced">Advanced Yoga</button>
+        </div>
+        <div id="yoga-session" style="display:none;">
+            <h2 id="class-title"></h2>
+            <div id="exercise-display">
+                <img id="pose-image" src="" alt="Yoga Pose">
+            </div>
+            <p id="timer"></p>
+            <button id="next-btn" style="display:none;">Next Pose</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
