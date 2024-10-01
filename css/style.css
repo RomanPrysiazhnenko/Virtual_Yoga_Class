@@ -14,7 +14,7 @@ body {
 /* (2) Контейнер для гри з фіксованим співвідношенням 9:16 */
 .game-container {
     width: 100%;
-    max-width: 400px; /* Вибираємо максимальну ширину для збереження пропорцій */
+    max-width: 400px;
     aspect-ratio: 9 / 16; /* Співвідношення сторін 9:16 */
     background-color: #2a2a2a;
     border-radius: 10px;
@@ -27,59 +27,7 @@ body {
     justify-content: space-between;
 }
 
-/* (3) Мобільна адаптація для менших екранів */
-@media (max-width: 768px) {
-    .game-container {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    table {
-        width: 100%;
-        font-size: 12px;
-    }
-
-    button {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
-
-    .modal-content {
-        width: 90%;
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    input[type="number"] {
-        width: 70px;
-        padding: 8px;
-        font-size: 14px;
-    }
-}
-
-/* (4) Стиль кнопок */
-button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* (5) Кнопки "Купити" та "Продати" */
-button#buy-btc, button#buy-eth, button#buy-ltc, button#buy-xrp {
-    background-color: #28a745;
-    color: white;
-}
-
-button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
-    background-color: #dc3545;
-    color: white;
-}
-
-/* (6) Модальні вікна - загальний стиль */
+/* (3) Модальні вікна - загальний стиль */
 .modal {
     display: none;
     position: fixed;
@@ -91,20 +39,23 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* (7) Модальні вікна - контент */
+/* (4) Модальні вікна - контент */
 .modal-content {
     background-color: #333333;
     margin: 15% auto;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    max-height: 80%;
+    overflow-y: auto;
 }
 
-/* (8) Стиль кнопки для закриття модального вікна */
+/* (5) Стиль кнопки для закриття модального вікна */
 .close-modal {
     float: right;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
     color: #aaa;
     cursor: pointer;
@@ -114,7 +65,71 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     color: white;
 }
 
-/* (9) Індикатор прогресу для аірдропу */
+/* (6) Стиль таблиць у модальних вікнах */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: white;
+}
+
+/* (7) Стиль для заголовків таблиць */
+th {
+    background-color: #444;
+}
+
+/* (8) Масштабування модальних вікон для мобільних пристроїв */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: 80%;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    input[type="number"] {
+        font-size: 14px;
+    }
+}
+
+/* (9) Стиль для кнопок */
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* (10) Кнопки "Купити" та "Продати" */
+button#buy-btc, button#buy-eth, button#buy-ltc, button#buy-xrp {
+    background-color: #28a745;
+    color: white;
+}
+
+button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* (11) Індикатор прогресу для аірдропу */
 #airdrop-progress-bar {
     width: 100%;
     background-color: #e0e0e0;
@@ -129,38 +144,30 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     width: 0%;
 }
 
-/* (10) Стиль таблиць у грі */
-table {
+/* (12) Адаптивний графік для криптовалют */
+#crypto-chart {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    height: 300px;
+    margin: 0 auto;
 }
 
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+/* (13) Анімація для кнопки активної участі в аірдропі */
+button#join-airdrop.active {
+    background-color: #007bff;
     color: white;
 }
 
-/* (11) Стиль для заголовків таблиць */
-th {
-    background-color: #444;
+/* (14) Кнопка для отримання аірдропу (коли активна) */
+button#claim-airdrop:enabled {
+    background-color: #ffc107;
+    color: black;
 }
 
-/* (12) Стиль для ринкових цін */
-#crypto-table td {
+/* (15) Оновлення стилів для таблиць активів та транзакцій */
+#assets-table td, #transaction-history td {
     text-align: center;
 }
 
-/* (13) Стиль для індикаторів у таблицях */
-#crypto-table th, #crypto-table td {
-    padding: 10px;
-}
-
-/* (14) Адаптивний графік для криптовалют */
-#crypto-chart {
-    width: 100%;
-    height: 400px;
-    margin: 0 auto;
+#assets-table th, #transaction-history th {
+    text-align: center;
 }
