@@ -49,7 +49,7 @@ body {
     aspect-ratio: 9 / 16; /* Співвідношення сторін 9:16 */
     max-width: 320px; /* Максимальна ширина */
     height: auto;
-    max-height: 80%;
+    max-height: 80%; /* Обмеження висоти */
     overflow-y: auto;
     position: relative; /* Для правильного відображення хрестика */
 }
@@ -95,7 +95,7 @@ th {
         max-width: 100%;
         aspect-ratio: 9 / 16; /* Співвідношення сторін збережено */
         height: auto;
-        max-height: 80%;
+        max-height: 80%; /* Максимальна висота для мобільних пристроїв */
     }
 
     table {
@@ -183,4 +183,9 @@ button#claim-airdrop:enabled {
 #crypto-table a {
     color: white;
     text-decoration: none;
+}
+/* (19) Стиль для кнопки активної участі в аірдропі */
+button#join-airdrop.active {
+    background-color: #28a745; /* Зелений колір для активної участі */
+    color: white;
 }
