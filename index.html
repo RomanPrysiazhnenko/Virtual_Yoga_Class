@@ -1,29 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Yoga Class</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Crypto Simulator</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Virtual Yoga Class</h1>
-        <p id="instruction">Select your class to begin:</p>
-        <div class="class-selection">
-            <button class="class-btn" data-class="beginner">Beginner Yoga</button>
-            <button class="class-btn" data-class="relaxation">Relaxation Yoga</button>
-            <button class="class-btn" data-class="advanced">Advanced Yoga</button>
-        </div>
-        <div id="yoga-session" style="display:none;">
-            <h2 id="class-title"></h2>
-            <div id="exercise-display">
-                <img id="pose-image" src="" alt="Yoga Pose">
+    <div class="game-container">
+        <!-- Заголовок гри -->
+        <h1>Crypto Simulator</h1>
+
+        <!-- Відображення балансу -->
+        <div id="balance">Баланс: $1000</div>
+
+        <!-- Кнопка "Ринки" для перегляду списку валют -->
+        <button id="market-btn">Ринки</button>
+        <div id="market-container" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Криптовалюти</h2>
+                <table id="crypto-table">
+                    <tr>
+                        <th>Криптовалюта</th>
+                        <th>Ціна</th>
+                        <th>Дія</th>
+                    </tr>
+                    <!-- Bitcoin -->
+                    <tr>
+                        <td><a href="#" id="btc-link">Bitcoin (BTC)</a></td>
+                        <td id="btc-price">$27,000</td>
+                        <td><button id="buy-btc">Купити</button><button id="sell-btc">Продати</button></td>
+                    </tr>
+                    <!-- Ethereum -->
+                    <tr>
+                        <td><a href="#" id="eth-link">Ethereum (ETH)</a></td>
+                        <td id="eth-price">$1,800</td>
+                        <td><button id="buy-eth">Купити</button><button id="sell-eth">Продати</button></td>
+                    </tr>
+                    <!-- Litecoin -->
+                    <tr>
+                        <td><a href="#" id="ltc-link">Litecoin (LTC)</a></td>
+                        <td id="ltc-price">$100</td>
+                        <td><button id="buy-ltc">Купити</button><button id="sell-ltc">Продати</button></td>
+                    </tr>
+                    <!-- Ripple -->
+                    <tr>
+                        <td><a href="#" id="xrp-link">Ripple (XRP)</a></td>
+                        <td id="xrp-price">$0.50</td>
+                        <td><button id="buy-xrp">Купити</button><button id="sell-xrp">Продати</button></td>
+                    </tr>
+                </table>
+                <button id="close-market">Закрити</button>
             </div>
-            <p id="timer"></p>
-            <button id="next-btn" style="display:none;">Next Pose</button>
+        </div>
+
+        <!-- Кнопка для перегляду активів -->
+        <button id="view-assets">Активи</button>
+        <div id="assets-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Ваші активи</h2>
+                <table id="assets-table">
+                    <thead>
+                        <tr>
+                            <th>Криптовалюта</th>
+                            <th>Кількість</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Дані активів будуть тут -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Кнопка для перегляду історії транзакцій -->
+        <button id="view-transaction-history">Історія транзакцій</button>
+        <div id="transaction-history-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Історія транзакцій</h2>
+                <table id="transaction-history">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Тип</th>
+                            <th>Криптовалюта</th>
+                            <th>Кількість</th>
+                            <th>Ціна</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Дані транзакцій будуть тут -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Кнопка для перегляду лідерборду -->
+        <button id="view-leaderboard">Лідерборд</button>
+        <div id="leaderboard-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Лідерборд</h2>
+                <table id="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Гравець</th>
+                            <th>Прибуток</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Лідерборд гравців -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Аірдропи з індикатором прогресу -->
+        <h2>Аірдроп</h2>
+        <div id="airdrops">
+            <p>Завершіть торгівлю на $100 протягом 2 днів для отримання аірдропу!</p>
+            <div id="airdrop-progress-bar">
+                <div id="progress"></div>
+            </div>
+            <button id="join-airdrop">Участь в аірдропі</button>
+            <button id="claim-airdrop" disabled>Отримати аірдроп</button>
+        </div>
+
+        <!-- Модальне вікно для купівлі та продажу -->
+        <div id="trade-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="trade-title">Купити/Продати</h2>
+                <label for="trade-quantity">Виберіть кількість або суму:</label>
+                <input type="number" id="trade-quantity" value="1" min="0.1" step="0.1">
+                <label for="trade-amount">або на суму:</label>
+                <input type="number" id="trade-amount" value="100" min="0.1" step="0.1">
+                <button id="buy-all">Купити все</button>
+                <button id="sell-all">Продати все</button>
+                <button id="confirm-trade">Купити/Продати</button>
+            </div>
+        </div>
+
+        <!-- Модальне вікно для графіків -->
+        <div id="chart-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Графік валюти</h2>
+                <canvas id="crypto-chart"></canvas> <!-- Графік буде тут -->
+            </div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Підключення JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Підключення Chart.js для графіків -->
 </body>
 </html>
