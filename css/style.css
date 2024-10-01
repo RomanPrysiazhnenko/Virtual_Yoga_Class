@@ -50,19 +50,22 @@ body {
     height: auto;
     max-height: 80%;
     overflow-y: auto;
+    position: relative; /* Для правильного відображення хрестика */
 }
 
 /* (5) Стиль кнопки для закриття модального вікна */
 .close-modal {
-    float: right;
+    position: absolute; /* Фіксуємо позицію */
+    top: 10px;
+    right: 15px;
     font-size: 24px;
     font-weight: bold;
-    color: #aaa;
+    color: white; /* Виправлено на білий */
     cursor: pointer;
 }
 
 .close-modal:hover {
-    color: white;
+    color: #ccc;
 }
 
 /* (6) Стиль таблиць у модальних вікнах */
@@ -76,7 +79,7 @@ th, td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    color: white;
+    color: white; /* Виправлено колір тексту на білий */
 }
 
 /* (7) Стиль для заголовків таблиць */
@@ -135,6 +138,7 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     background-color: #e0e0e0;
     border-radius: 10px;
     margin-bottom: 10px;
+    overflow: hidden; /* Запобігаємо виходу прогресу за межі */
 }
 
 #progress {
@@ -142,6 +146,7 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     background-color: #28a745;
     border-radius: 10px;
     width: 0%;
+    max-width: 100%; /* Обмежуємо максимальну ширину прогресу */
 }
 
 /* (12) Адаптивний графік для криптовалют */
@@ -170,4 +175,10 @@ button#claim-airdrop:enabled {
 
 #assets-table th, #transaction-history th {
     text-align: center;
+}
+
+/* (16) Стиль для посилань на назви валют */
+#crypto-table a {
+    color: white; /* Виправлено на білий */
+    text-decoration: none;
 }
