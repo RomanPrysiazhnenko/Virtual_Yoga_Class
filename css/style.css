@@ -1,26 +1,33 @@
-/* Основний стиль сторінки */
+/* (1) Основний стиль сторінки */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #1b1b1b;
     color: #eaeaea;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Центруємо вікно гри вертикально */
 }
 
-/* Контейнер для гри */
+/* (2) Контейнер для гри з фіксованим співвідношенням 9:16 */
 .game-container {
     width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 400px; /* Вибираємо максимальну ширину для збереження пропорцій */
+    aspect-ratio: 9 / 16; /* Співвідношення сторін 9:16 */
     background-color: #2a2a2a;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     color: #eaeaea;
     text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* Мобільна адаптація */
+/* (3) Мобільна адаптація для менших екранів */
 @media (max-width: 768px) {
     .game-container {
         padding: 10px;
@@ -50,7 +57,7 @@ body {
     }
 }
 
-/* Кнопки */
+/* (4) Стиль кнопок */
 button {
     padding: 10px 20px;
     margin: 5px;
@@ -61,6 +68,7 @@ button {
     transition: all 0.3s ease;
 }
 
+/* (5) Кнопки "Купити" та "Продати" */
 button#buy-btc, button#buy-eth, button#buy-ltc, button#buy-xrp {
     background-color: #28a745;
     color: white;
@@ -71,7 +79,7 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     color: white;
 }
 
-/* Модальні вікна */
+/* (6) Модальні вікна - загальний стиль */
 .modal {
     display: none;
     position: fixed;
@@ -83,6 +91,7 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
+/* (7) Модальні вікна - контент */
 .modal-content {
     background-color: #333333;
     margin: 15% auto;
@@ -92,6 +101,7 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     max-width: 500px;
 }
 
+/* (8) Стиль кнопки для закриття модального вікна */
 .close-modal {
     float: right;
     font-size: 28px;
@@ -104,7 +114,7 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     color: white;
 }
 
-/* Індикатор прогресу для аірдропу */
+/* (9) Індикатор прогресу для аірдропу */
 #airdrop-progress-bar {
     width: 100%;
     background-color: #e0e0e0;
@@ -117,4 +127,40 @@ button#sell-btc, button#sell-eth, button#sell-ltc, button#sell-xrp {
     background-color: #28a745;
     border-radius: 10px;
     width: 0%;
+}
+
+/* (10) Стиль таблиць у грі */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: white;
+}
+
+/* (11) Стиль для заголовків таблиць */
+th {
+    background-color: #444;
+}
+
+/* (12) Стиль для ринкових цін */
+#crypto-table td {
+    text-align: center;
+}
+
+/* (13) Стиль для індикаторів у таблицях */
+#crypto-table th, #crypto-table td {
+    padding: 10px;
+}
+
+/* (14) Адаптивний графік для криптовалют */
+#crypto-chart {
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
 }
