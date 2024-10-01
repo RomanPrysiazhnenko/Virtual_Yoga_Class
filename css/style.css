@@ -39,14 +39,15 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* (4) Модальні вікна - контент */
+/* (4) Модальні вікна - контент із співвідношенням 9:16 і трохи менші за головний екран */
 .modal-content {
     background-color: #333333;
     margin: 15% auto;
     padding: 15px;
     border-radius: 10px;
-    width: 85%; /* Зменшено ширину до 85% */
-    max-width: 350px; /* Трохи зменшено максимальну ширину */
+    width: 80%; /* Зменшено до 80% ширини головного екрану */
+    aspect-ratio: 9 / 16; /* Співвідношення сторін 9:16 */
+    max-width: 320px; /* Максимальна ширина */
     height: auto;
     max-height: 80%;
     overflow-y: auto;
@@ -55,12 +56,12 @@ body {
 
 /* (5) Стиль кнопки для закриття модального вікна */
 .close-modal {
-    position: absolute; /* Фіксуємо позицію */
+    position: absolute;
     top: 10px;
     right: 15px;
     font-size: 24px;
     font-weight: bold;
-    color: white; /* Виправлено на білий */
+    color: white;
     cursor: pointer;
 }
 
@@ -79,7 +80,7 @@ th, td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    color: white; /* Виправлено колір тексту на білий */
+    color: white;
 }
 
 /* (7) Стиль для заголовків таблиць */
@@ -90,8 +91,9 @@ th {
 /* (8) Масштабування модальних вікон для мобільних пристроїв */
 @media (max-width: 768px) {
     .modal-content {
-        width: 90%; /* Для мобільних зменшено до 90% */
+        width: 90%; /* Для мобільних зменшено до 90% ширини головного екрану */
         max-width: 100%;
+        aspect-ratio: 9 / 16; /* Співвідношення сторін збережено */
         height: auto;
         max-height: 80%;
     }
@@ -179,6 +181,6 @@ button#claim-airdrop:enabled {
 
 /* (16) Стиль для посилань на назви валют */
 #crypto-table a {
-    color: white; /* Виправлено на білий */
+    color: white;
     text-decoration: none;
 }
