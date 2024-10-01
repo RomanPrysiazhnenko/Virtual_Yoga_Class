@@ -8,13 +8,13 @@
 </head>
 <body>
     <div class="game-container">
-        <!-- Заголовок гри -->
+        <!-- (1) Заголовок гри -->
         <h1>Crypto Simulator</h1>
 
-        <!-- Відображення балансу -->
-        <div id="balance">Баланс: $1000</div>
+        <!-- (2) Відображення балансу -->
+        <div id="balance">Баланс: $5000 USDT</div>
 
-        <!-- Кнопка "Ринки" для перегляду списку валют -->
+        <!-- (3) Кнопка "Ринки" для перегляду списку валют -->
         <button id="market-btn">Ринки</button>
         <div id="market-container" class="modal">
             <div class="modal-content">
@@ -26,36 +26,31 @@
                         <th>Ціна</th>
                         <th>Дія</th>
                     </tr>
-                    <!-- Bitcoin -->
                     <tr>
                         <td><a href="#" id="btc-link">Bitcoin (BTC)</a></td>
                         <td id="btc-price">$27,000</td>
                         <td><button id="buy-btc">Купити</button><button id="sell-btc">Продати</button></td>
                     </tr>
-                    <!-- Ethereum -->
                     <tr>
                         <td><a href="#" id="eth-link">Ethereum (ETH)</a></td>
                         <td id="eth-price">$1,800</td>
                         <td><button id="buy-eth">Купити</button><button id="sell-eth">Продати</button></td>
                     </tr>
-                    <!-- Litecoin -->
                     <tr>
                         <td><a href="#" id="ltc-link">Litecoin (LTC)</a></td>
                         <td id="ltc-price">$100</td>
                         <td><button id="buy-ltc">Купити</button><button id="sell-ltc">Продати</button></td>
                     </tr>
-                    <!-- Ripple -->
                     <tr>
                         <td><a href="#" id="xrp-link">Ripple (XRP)</a></td>
                         <td id="xrp-price">$0.50</td>
                         <td><button id="buy-xrp">Купити</button><button id="sell-xrp">Продати</button></td>
                     </tr>
                 </table>
-                <button id="close-market">Закрити</button>
             </div>
         </div>
 
-        <!-- Кнопка для перегляду активів -->
+        <!-- (4) Кнопка для перегляду активів -->
         <button id="view-assets">Активи</button>
         <div id="assets-modal" class="modal">
             <div class="modal-content">
@@ -75,7 +70,7 @@
             </div>
         </div>
 
-        <!-- Кнопка для перегляду історії транзакцій -->
+        <!-- (5) Кнопка для перегляду історії транзакцій -->
         <button id="view-transaction-history">Історія транзакцій</button>
         <div id="transaction-history-modal" class="modal">
             <div class="modal-content">
@@ -98,7 +93,7 @@
             </div>
         </div>
 
-        <!-- Кнопка для перегляду лідерборду -->
+        <!-- (6) Кнопка для перегляду лідерборду -->
         <button id="view-leaderboard">Лідерборд</button>
         <div id="leaderboard-modal" class="modal">
             <div class="modal-content">
@@ -118,10 +113,10 @@
             </div>
         </div>
 
-        <!-- Аірдропи з індикатором прогресу -->
+        <!-- (7) Аірдропи з індикатором прогресу -->
         <h2>Аірдроп</h2>
         <div id="airdrops">
-            <p>Завершіть торгівлю на $100 протягом 2 днів для отримання аірдропу!</p>
+            <p>Завершіть торгівлю на $100 для отримання аірдропу!</p>
             <div id="airdrop-progress-bar">
                 <div id="progress"></div>
             </div>
@@ -129,22 +124,18 @@
             <button id="claim-airdrop" disabled>Отримати аірдроп</button>
         </div>
 
-        <!-- Модальне вікно для купівлі та продажу -->
+        <!-- (8) Модальне вікно для купівлі та продажу -->
         <div id="trade-modal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
                 <h2 id="trade-title">Купити/Продати</h2>
-                <label for="trade-quantity">Виберіть кількість або суму:</label>
-                <input type="number" id="trade-quantity" value="1" min="0.1" step="0.1">
-                <label for="trade-amount">або на суму:</label>
-                <input type="number" id="trade-amount" value="100" min="0.1" step="0.1">
-                <button id="buy-all">Купити все</button>
-                <button id="sell-all">Продати все</button>
+                <label for="trade-quantity">Виберіть кількість:</label>
+                <input type="number" id="trade-quantity" value="1" min="0.00001" step="0.00001">
                 <button id="confirm-trade">Купити/Продати</button>
             </div>
         </div>
 
-        <!-- Модальне вікно для графіків -->
+        <!-- (9) Модальне вікно для графіків -->
         <div id="chart-modal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
